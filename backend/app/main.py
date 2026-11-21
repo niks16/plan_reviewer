@@ -32,7 +32,7 @@ def get_plan(plan_id: str):
         "id": plan_id,
         "text": text,
         "review": {"deadline_day": task_list["deadline_day"], "tasks": task_list["tasks"], "findings": task_list["findings"]},
-        "schedule": schedule(review["tasks"], review["deadline_day"]),
+        "schedule": schedule(task_list["tasks"], task_list["deadline_day"]),
     }
 
 

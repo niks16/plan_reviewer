@@ -46,7 +46,7 @@ plan gives no duration, or only a vague one such as "a few days", use null.
 - duration_text: the duration exactly as worded in the plan (e.g. "2 weeks", "a few days"), or \
 null if the plan gives none.
 - depends_on: ids of tasks that the plan says must be finished before this one can start. \
-Include dependencies stated in text as well as in tables.
+Include dependencies stated in prose as well as in tables.
 - quote: a short passage copied character for character from the plan that states this task \
 (for a table row, copy the row's only task cell text).
 - id: "T1", "T2", ... in the order tasks appear.
