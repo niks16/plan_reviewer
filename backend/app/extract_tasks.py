@@ -51,7 +51,7 @@ Include dependencies stated in text as well as in tables.
 (for a table row, copy the row's only task cell text).
 - id: "T1", "T2", ... in the order tasks appear.
 - deadline_day: the day number by which the plan says everything must be finished (deadline day), converted to days if given in weeks. \
-null if the plan states none. Read through all the text to find all deadlines, there might be multiple deadline references, use the highest.
+null if the plan states none. Read through all the text to find all deadlines references, use the highest.
 - deadline_quote: the passage, copied character for character, that states it, or null."""
 
 _NULLABLE_INT = {"anyOf": [{"type": "integer"}, {"type": "null"}]}
