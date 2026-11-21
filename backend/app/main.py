@@ -4,9 +4,8 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from .schedule_tasks import schedule
 from .extract_tasks import extract_tasks
-
-from .scheduler import schedule
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
