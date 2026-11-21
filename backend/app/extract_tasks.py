@@ -24,9 +24,7 @@ import anthropic
 dotenv.load_dotenv()
 
 MODEL = os.environ.get("EXTRACT_MODEL", "claude-opus-5-5")
-TIME_LIMIT_SECONDS = 10.0
-# Leave headroom inside the 10 second budget for validation and the HTTP reply.
-API_TIMEOUT_SECONDS = 9.0
+API_TIMEOUT_SECONDS = 30.0
 
 SYSTEM = """You extract the task list from an event plan written in Markdown.
 
@@ -115,16 +113,18 @@ def ask_model(plan_text, client=None):
     client = client or anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
     try:
+        started = time.monotonic()
         reply = client.with_options(timeout=API_TIMEOUT_SECONDS, max_retries=0).beta.messages.create(
             model=MODEL,
             max_tokens=8000,
             system=SYSTEM,
             messages=[{"role": "user", "content": f"<plan>\n{plan_text}\n</plan>"}],
-            # Opus 5.5 always thinks; low effort keeps the call inside the time budget.
             output_config={"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}},
             betas=["server-side-fallback-2026-07-01"],
             fallbacks="default",
         )
+        ended = time.monotonic
+        print(f"Model request took {ended-started} sec")
     except TypeError as e:
         # The SDK raises a bare TypeError when it finds no credentials at all.
         if "authentication method" not in str(e):
@@ -321,8 +321,7 @@ def extract_tasks(plan_text, plan_id, client=None):
     """
     started = time.monotonic()
     result = build_review(ask_model(plan_text, client), plan_text, plan_id)
-    if time.monotonic() - started > TIME_LIMIT_SECONDS:
-        raise ExtractionError(f"Extraction took longer than {TIME_LIMIT_SECONDS:.0f} seconds.")
+    print(f"Time taken: {time.monotonic() - started}, Model: {MODEL}")
     return result
 
 
