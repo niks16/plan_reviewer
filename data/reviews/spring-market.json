@@ -7,7 +7,7 @@
       "owner": "Joan",
       "duration_days": 2,
       "depends_on": [],
-      "quote": "Book the main hall and the side room"
+      "quote": "Book the main hall and the side room | Joan | 2 days | -"
     },
     {
       "id": "T2",
@@ -17,7 +17,7 @@
       "depends_on": [
         "T1"
       ],
-      "quote": "Invite stallholders and confirm their pitches"
+      "quote": "Invite stallholders and confirm their pitches | Martin | 10 days | Book the main hall and the side room"
     },
     {
       "id": "T3",
@@ -27,7 +27,7 @@
       "depends_on": [
         "T1"
       ],
-      "quote": "Organise the tea and cake stall"
+      "quote": "Organise the tea and cake stall | Joan | 4 days | Book the main hall and the side room"
     },
     {
       "id": "T4",
@@ -37,7 +37,7 @@
       "depends_on": [
         "T1"
       ],
-      "quote": "Design the poster and flyer"
+      "quote": "Design the poster and flyer | Leila | 3 days | Book the main hall and the side room"
     },
     {
       "id": "T5",
@@ -47,7 +47,7 @@
       "depends_on": [
         "T4"
       ],
-      "quote": "Print the posters and put them up around town"
+      "quote": "Print the posters and put them up around town | Leila | 1 week | Design the poster and flyer"
     },
     {
       "id": "T6",
@@ -57,7 +57,7 @@
       "depends_on": [
         "T2"
       ],
-      "quote": "Draw up the floor plan for both rooms"
+      "quote": "Draw up the floor plan for both rooms | Joan | 3 days | Invite stallholders and confirm their pitches"
     },
     {
       "id": "T7",
@@ -67,7 +67,7 @@
       "depends_on": [
         "T6"
       ],
-      "quote": "Hire the extra tables and chairs"
+      "quote": "Hire the extra tables and chairs | Martin | 2 days | Draw up the floor plan for both rooms"
     },
     {
       "id": "T8",
@@ -77,7 +77,7 @@
       "depends_on": [
         "T6"
       ],
-      "quote": "Set up the volunteer rota for the day"
+      "quote": "Set up the volunteer rota for the day | Leila | 3 days | Draw up the floor plan for both rooms"
     }
   ],
   "findings": []

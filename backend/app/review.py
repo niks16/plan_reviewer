@@ -1,25 +1,22 @@
 import json
-import os
 import sys
+from pathlib import Path
 
-import anthropic
-
-PROMPT = "Review this project plan. Reply with JSON holding deadline_day, tasks and findings."
+from backend.app.extract_tasks import extract_tasks
 
 
-def review_plan(text, client=None):
-    client = client or anthropic.Anthropic()
-    reply = client.messages.create(
-        model=os.environ.get("REVIEW_MODEL", "claude-sonnet-5-5"),
-        max_tokens=16000,
-        messages=[{"role": "user", "content": PROMPT + "\n\n" + text}],
-    )
-    return json.loads("".join(block.text for block in reply.content if block.type == "text"))
+def main(argv):
+    if len(argv) not in (2, 3):
+        print("usage: python -m app.extract_tasks <plan.md> [out.json]", file=sys.stderr)
+        return 2
+    result = extract_tasks(Path(argv[1]).read_text())
+    output = json.dumps(result, indent=2)
+    if len(argv) == 3:
+        Path(argv[2]).write_text(output + "\n")
+    else:
+        print(output)
+    return 0
 
 
 if __name__ == "__main__":
-    plan_path, out_path = sys.argv[1], sys.argv[2]
-    with open(plan_path) as f:
-        review = review_plan(f.read())
-    with open(out_path, "w") as f:
-        json.dump(review, f, indent=2)
+    sys.exit(main(sys.argv))
