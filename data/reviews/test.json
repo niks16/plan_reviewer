@@ -1,0 +1,41 @@
+{
+  "plan_id": "test",
+  "deadline_day": 6,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "Book the room",
+      "owner": "Ann",
+      "duration_days": 2,
+      "depends_on": []
+    },
+    {
+      "id": "B",
+      "name": "Invite guests",
+      "owner": "Ben",
+      "duration_days": 3,
+      "depends_on": ["A"]
+    },
+    {
+      "id": "C",
+      "name": "Order snacks",
+      "owner": "Ann",
+      "duration_days": 1,
+      "depends_on": ["A"]
+    },
+    {
+      "id": "D",
+      "name": "Set up the room",
+      "owner": null,
+      "duration_days": 2,
+      "depends_on": ["B", "C"]
+    },
+    {
+      "id": "E",
+      "name": "Make a playlist",
+      "owner": "Ann",
+      "duration_days": 2,
+      "depends_on": []
+    }
+  ]
+}
