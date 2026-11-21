@@ -16,12 +16,17 @@ import re
 import sys
 import time
 import dotenv
-
+import logging
 from pathlib import Path
 
 import anthropic
 
 dotenv.load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
 
 MODEL = os.environ.get("EXTRACT_MODEL", "claude-opus-5-5")
 API_TIMEOUT_SECONDS = 30.0
@@ -110,7 +115,7 @@ def _in_plan(fragment, plan_variants, case_sensitive=False):
 
 def ask_model(plan_text, client=None):
     """Call the API and return the model's raw JSON proposal."""
-    client = client or anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+    client = client if client is not None else anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
     try:
         started = time.monotonic()
@@ -124,7 +129,7 @@ def ask_model(plan_text, client=None):
             fallbacks="default",
         )
         ended = time.monotonic()
-        print(f"Model request took {ended-started} sec")
+        logging.info(f"Model request took {ended-started} sec")
     except TypeError as e:
         # The SDK raises a bare TypeError when it finds no credentials at all.
         if "authentication method" not in str(e):
@@ -321,7 +326,7 @@ def extract_tasks(plan_text, client=None):
     """
     started = time.monotonic()
     result = build_review(ask_model(plan_text, client), plan_text)
-    print(f"Time taken: {time.monotonic() - started}, Model: {MODEL}")
+    logging.info(f"Time taken: {time.monotonic() - started}, Model: {MODEL}")
     return result
 
 

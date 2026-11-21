@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    image: plan-reviewer
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      PORT: 8000
+    env_file:
+      - path: .env
+        required: false # ANTHROPIC_API_KEY, EXTRACT_MODEL — see example.env
+    restart: unless-stopped
