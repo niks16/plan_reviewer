@@ -123,7 +123,7 @@ def ask_model(plan_text, client=None):
             betas=["server-side-fallback-2026-07-01"],
             fallbacks="default",
         )
-        ended = time.monotonic
+        ended = time.monotonic()
         print(f"Model request took {ended-started} sec")
     except TypeError as e:
         # The SDK raises a bare TypeError when it finds no credentials at all.
@@ -158,7 +158,7 @@ def _finding(title, detail, quote, remedy):
     return {"title": title, "detail": f"{detail} {remedy}", "quote": quote}
 
 
-def build_review(proposal, plan_text, plan_id):
+def build_review(proposal, plan_text):
     """Turn the model's proposal into the output JSON.
 
     Nothing is rejected: every problem found becomes a finding, and the task
@@ -310,17 +310,17 @@ def build_review(proposal, plan_text, plan_id):
             "Check the event date stated in the plan.",
         ))
 
-    return {"plan_id": plan_id, "deadline_day": deadline, "tasks": clean, "findings": findings}
+    return {"deadline_day": deadline, "tasks": clean, "findings": findings}
 
 
-def extract_tasks(plan_text, plan_id, client=None):
-    """Return {"plan_id", "deadline_day", "tasks", "findings"} for a plan.
+def extract_tasks(plan_text, client=None):
+    """Return { "deadline_day", "tasks", "findings"} for a plan.
 
     Raises ExtractionError only when the model gives no usable answer
     (timeout, API error, refusal, invalid JSON).
     """
     started = time.monotonic()
-    result = build_review(ask_model(plan_text, client), plan_text, plan_id)
+    result = build_review(ask_model(plan_text, client), plan_text)
     print(f"Time taken: {time.monotonic() - started}, Model: {MODEL}")
     return result
 
@@ -329,12 +329,7 @@ def main(argv):
     if len(argv) not in (2, 3):
         print("usage: python -m app.extract_tasks <plan.md> [out.json]", file=sys.stderr)
         return 2
-    try:
-        plan_id = Path(argv[2] if len(argv) == 3 else argv[1]).stem
-        result = extract_tasks(Path(argv[1]).read_text(), plan_id)
-    except (OSError, ExtractionError) as e:
-        print(e, file=sys.stderr)
-        return 1
+    result = extract_tasks(Path(argv[1]).read_text())
     output = json.dumps(result, indent=2)
     if len(argv) == 3:
         Path(argv[2]).write_text(output + "\n")
