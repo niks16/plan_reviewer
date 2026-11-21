@@ -4,6 +4,8 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from .extract_tasks import extract_tasks
+
 from .scheduler import schedule
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,11 +27,12 @@ def list_plans():
 @app.get("/api/plans/{plan_id}")
 def get_plan(plan_id: str):
     text = (DATA / "plans" / f"{plan_id}.md").read_text()
+    task_list = extract_tasks(text, plan_id)
     review = json.loads((DATA / "reviews" / f"{plan_id}.json").read_text())
     return {
         "id": plan_id,
         "text": text,
-        "review": review,
+        "review": {"deadline_day": task_list["deadline_day"], "tasks": task_list["tasks"], "findings": task_list["findings"]},
         "schedule": schedule(review["tasks"], review["deadline_day"]),
     }
 

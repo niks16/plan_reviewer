@@ -169,7 +169,7 @@ def build_review(proposal, plan_text, plan_id):
     findings = []
 
     tasks = proposal.get("tasks")
-    print(f"DEBUG: all output={json.dumps(proposal, indent=2)}", file=sys.stderr)
+    # print(f"DEBUG: all output={json.dumps(proposal, indent=2)}", file=sys.stderr)
     if not isinstance(tasks, list):
         tasks = []
     if not tasks:
