@@ -1,0 +1,12 @@
+{
+  "status": "cycle",
+  "schedule": [],
+  "end_day": null,
+  "deadline_day": 35,
+  "meets_deadline": null,
+  "days_late": null,
+  "cycle": [
+    "T2",
+    "T3"
+  ]
+}

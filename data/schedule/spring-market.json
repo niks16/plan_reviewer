@@ -1,0 +1,53 @@
+{
+  "status": "scheduled",
+  "schedule": [
+    {
+      "id": "T1",
+      "start_day": 0,
+      "end_day": 2
+    },
+    {
+      "id": "T2",
+      "start_day": 2,
+      "end_day": 12
+    },
+    {
+      "id": "T3",
+      "start_day": 2,
+      "end_day": 6
+    },
+    {
+      "id": "T4",
+      "start_day": 2,
+      "end_day": 5
+    },
+    {
+      "id": "T5",
+      "start_day": 5,
+      "end_day": 12
+    },
+    {
+      "id": "T6",
+      "start_day": 12,
+      "end_day": 15
+    },
+    {
+      "id": "T7",
+      "start_day": 15,
+      "end_day": 17
+    },
+    {
+      "id": "T8",
+      "start_day": 15,
+      "end_day": 18
+    }
+  ],
+  "end_day": 18,
+  "deadline_day": 21,
+  "meets_deadline": true,
+  "days_late": 0,
+  "cycle": [],
+  "optimal": true,
+  "lower_bound": 18,
+  "solver": "greedy"
+}
