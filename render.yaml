@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: plan-reviewer
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/plans
+    autoDeploy: true
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false # Render prompts for the value on first deploy; never committed
+      - key: EXTRACT_MODEL
+        value: claude-haiku-5-5
